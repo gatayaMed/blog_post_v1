@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from . models import Post
+from . models import Post, Category
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from .forms import PostForm ,EditForm
 from django.urls import reverse_lazy
@@ -12,7 +12,13 @@ class HomeView(ListView):
     template_name = 'home.html'
     #ordering = ['-id'] # order post by negative id 
     ordering = ['-post_date']  #  ordering the posts by date   
-
+    
+    def get_context_data(self,*args ,**kwargs):
+        cat_menu = Category.objects.all()
+        context = super(HomeView, self).get_context_data(*args, **kwargs)
+        
+        context["cat_menu"] = cat_menu 
+        return context
 
 
 class PostDetails(DetailView):
@@ -43,3 +49,23 @@ class DeletePostView(DeleteView):
     model = Post
     template_name = 'deletepost.html'
     success_url = reverse_lazy('home')
+
+
+class AddCategoryView(CreateView):
+    model = Category 
+    template_name = 'addcategory.html'
+    fields = '__all__'    
+
+
+def CategoryView(request, cats):
+
+    category_posts = Post.objects.filter(category=cats.replace('-',' '))
+
+    return render (request, 'categories.html',{'cats':cats.replace('-',' '), 'category_posts': category_posts})
+
+
+def Category_List_View(request):
+
+    category_list = Category.objects.all()
+
+    return render (request, 'category_list_view.html',{'category_list':category_list})

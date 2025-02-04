@@ -1,29 +1,37 @@
-
 {% extends 'base.html' %} 
 
 
 {% block content %}
 <br/> <br/>
 
+{%if category_posts %}
+<h1> {{cats}} Category </h1>
 
-<h1> Blog Posts  </h1>
 
 <ul>
-{% for post in object_list %}
+{% for post in category_posts %}
                     <!-- in the url  we writte the name of the view in urls.py = 'article/<int:pk>',PostDetails.as_view(), name='postdetails'    very importtant to understand -->
       <li> <a  href =" {% url 'postdetails' post.pk %}"> {{post.title}} </a> 
-       - <a href="  {% url 'category' post.category|slugify %}  " >  {{post.category}}  </a>
-      
+       -{{post.category}}
        -{{post.author.first_name}} 
        -{{post.author.last_name}} 
        -{{post.post_date}}
-       
+        
+       {% if user.is_authenticated %}
+        <small> <a href="{% url 'updatepost' post.pk %} " >Edit</a> </small> 
+        <small> <a href="{% url 'deletepost' post.pk %} " >Delete</a> </small> 
+
+        {% endif %}
         <br/>
        {{post.body|slice:":200"|safe }}</li>
 
 {% endfor %}
 </ul>
 
+{%else %}
+   
 
-
+  <h2> Sorry therre is no category meeting your search ...!</h2>
+{%endif %}
 {% endblock %}
+

@@ -27,11 +27,34 @@
           
             
            
+            {% if cat_menu %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                Categories
+              </a>
+              <div class="dropdown-menu">
+
+                {% for cat in cat_menu %}
+                
+              
+                <a class="dropdown-item" href="{% url 'category' cat|slugify %} ">{{cat}}</a>
+
+                {%endfor%}
+              </div>
+            </li>
+            {%else%}
+             
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'category_list'%}">Categories</a>
+              </li>
+            {%endif %}
                   
             <li class="nav-item">
               <a class="nav-link" href="{% url 'addpost'%}">Add post</a>
             </li>
-            
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'addcategory'%}">Add category</a>
+            </li>
 
             <li class="nav-item">
               <a class="nav-link" href="#">Logout</a>
