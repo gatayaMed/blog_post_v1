@@ -9,9 +9,15 @@
 <small > By: {{post.author.first_name}} {{post.author.last_name}}
     --{{post.post_date}}  
 
-    <a href="{% url 'updatepost' post.pk %} " >Edit</a>
-    <a href="{% url 'deletepost' post.pk %} " >Delete</a>
-   
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}  <!--  in this line we will test if the  id of the loged user is the as the post creator id  if is equal he can edit and delete the post 
+        this is the way to correct user to edit or delete posts -->
+            <a href="{% url 'updatepost' post.pk %} " >Edit</a>
+            <a href="{% url 'deletepost' post.pk %} " >Delete</a> 
+        
+        {%endif%}    
+
+    {% endif%}
 </small>   </br>
 
 <hr>
@@ -26,5 +32,20 @@
 <br/> <br/>
 <hr>
 <br/>
+
+<form action="{% url 'like_post' post.pk %}" method="POST">
+
+    {% csrf_token %}
+
+    {% if user.is_authenticated %}
+    {%if liked %}
+         <button type="submit", name="post_id", value="{{post.id}}" , class="btn btn-danger btn-sm"> Unlike </button>
+    {%else%}
+         <button type="submit", name="post_id", value="{{post.id}}" , class="btn btn-primary btn-sm"> Like </button>
+    {% endif %}  
+    
+    {% else %}
+    - {{total_likes}} Likes 
+    {% endif %} 
 
  {% endblock %} 

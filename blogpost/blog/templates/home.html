@@ -12,7 +12,7 @@
 {% for post in object_list %}
                     <!-- in the url  we writte the name of the view in urls.py = 'article/<int:pk>',PostDetails.as_view(), name='postdetails'    very importtant to understand -->
       <li> <a  href =" {% url 'postdetails' post.pk %}"> {{post.title}} </a> 
-       - <a href="  {% url 'category' post.category|slugify %}  " >  {{post.category}}  </a>
+       - <a href="{% url 'category' post.category|slugify %}  " >  {{post.category}}  </a>
       
        -{{post.author.first_name}} 
        -{{post.author.last_name}} 

@@ -5,7 +5,9 @@
 {% block content %}
 <br/> <br/>
 
-
+{% if user.is_authenticated %}
+    {% if user.id == post.author.id %}  <!--  in this line we will test if the  id of the loged user is the as the post creator id  if is equal he can edit and delete the post 
+    this is the way to correct user to edit or delete posts -->
         <h1> Delete Post ... </h1>
         <h3> Delete : {{post.title}} </h3>
 
@@ -16,5 +18,11 @@
                 <button class="btn btn-danger" > Delete</button>
             
         </div>
-  
+    {%endif%}    
+ 
+{% else %}
+   
+   You are not logged in !!!!! 
+
+{% endif%}
 {% endblock %}
