@@ -9,6 +9,8 @@
 <small > By: {{post.author.first_name}} {{post.author.last_name}}
     --{{post.post_date}}  
 
+    <a href="{% url 'updatepost' post.pk %} " >Edit</a>
+    <a href="# " >Delete</a>
    
 </small>   </br>
 
