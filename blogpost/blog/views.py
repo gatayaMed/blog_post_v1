@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from . models import Post
-from django.views.generic import ListView,DetailView,CreateView,UpdateView
+from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from .forms import PostForm ,EditForm
 from django.urls import reverse_lazy
 # Create your views here.
@@ -37,3 +37,9 @@ class UpdatePostView(UpdateView):
     template_name = 'updatepost.html'
     success_url = reverse_lazy('home')  # Change 'home' to the actual name of the page you want to redirect to
     #fields = ['title','title_tag','body']
+
+
+class DeletePostView(DeleteView):
+    model = Post
+    template_name = 'deletepost.html'
+    success_url = reverse_lazy('home')
